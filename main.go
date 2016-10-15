@@ -25,7 +25,7 @@ func execPipeline(client pb.PipelineExecutorClient, pipeline *pb.ExecutePipeline
 		if err != nil {
 			grpclog.Fatalf("error! %v\n", err)
 		}
-		grpclog.Printf("response: code: %v, text:%v", chunk.Status, chunk.Text)
+		grpclog.Printf("%v", chunk.Text)
 	}
 	grpclog.Println("end of pipeline")
 }

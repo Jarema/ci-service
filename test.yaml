@@ -1,7 +1,10 @@
 ---
   commands:
-    - pwd
-    - ls
-    - date
-    # - docker pull debian
-    - docker pull java
+    - name: show current dir
+      cmd: pwd
+    - name: list workspace
+      cmd: ls -la
+    - name: show current date
+      cmd: date
+    - name: pull docker image
+      cmd: docker pull java
