@@ -38,5 +38,5 @@ func main() {
 	defer conn.Close()
 	client := pb.NewPipelineExecutorClient(conn)
 
-	execPupeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte("test exec")})
+	execPupeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte("ls")})
 }
