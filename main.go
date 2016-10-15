@@ -4,8 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"os"
-	"strings"
+	"io/ioutil"
 
 	pb "github.com/jarema/ci-service/executor"
 	"google.golang.org/grpc"
@@ -37,9 +36,15 @@ func main() {
 		fmt.Println("error during connecting to grpc", err)
 		return
 	}
-	cmd := strings.Join(os.Args[1:], " ")
+	// cmd := strings.Join(os.Args[1:], " ")
 	defer conn.Close()
 	client := pb.NewPipelineExecutorClient(conn)
 
-	execPipeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte(cmd)})
+	// execPipeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte(cmd)})
+	file, err := ioutil.ReadFile("test.yaml")
+	if err != nil {
+		fmt.Println("err: ", err)
+		return
+	}
+	execPipeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: file})
 }
