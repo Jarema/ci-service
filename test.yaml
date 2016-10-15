@@ -3,3 +3,5 @@
     - pwd
     - ls
     - date
+    # - docker pull debian
+    - docker pull java
