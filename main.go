@@ -4,13 +4,15 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os"
+	"strings"
 
 	pb "github.com/jarema/ci-service/executor"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 )
 
-func execPupeline(client pb.PipelineExecutorClient, pipeline *pb.ExecutePipeline) {
+func execPipeline(client pb.PipelineExecutorClient, pipeline *pb.ExecutePipeline) {
 	grpclog.Println("executing pipeline")
 	stream, err := client.Execute(context.Background(), pipeline)
 	if err != nil {
@@ -35,8 +37,9 @@ func main() {
 		fmt.Println("error during connecting to grpc", err)
 		return
 	}
+	cmd := strings.Join(os.Args[1:], " ")
 	defer conn.Close()
 	client := pb.NewPipelineExecutorClient(conn)
 
-	execPupeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte("ls")})
+	execPipeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte(cmd)})
 }
