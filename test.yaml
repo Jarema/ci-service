@@ -1,10 +1,13 @@
 ---
   commands:
     - name: show current dir
-      cmd: pwd
+      sh: pwd
+      cmd: notempty
     - name: list workspace
-      cmd: ls -la
-    - name: show current date
-      cmd: date
-    - name: pull docker image
-      cmd: docker pull java
+      sh: ls -la
+    - name: some commands
+      docker:
+        image: java
+        steps:
+          - ls
+          - pwd
