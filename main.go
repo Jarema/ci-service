@@ -12,7 +12,7 @@ import (
 )
 
 func execPipeline(client pb.PipelineExecutorClient, pipeline *pb.ExecutePipeline) {
-	grpclog.Println("executing pipeline")
+	fmt.Println("executing pipeline")
 	stream, err := client.Execute(context.Background(), pipeline)
 	if err != nil {
 		grpclog.Fatalf("error: %v", err)
@@ -25,9 +25,9 @@ func execPipeline(client pb.PipelineExecutorClient, pipeline *pb.ExecutePipeline
 		if err != nil {
 			grpclog.Fatalf("error! %v\n", err)
 		}
-		grpclog.Printf("%v", chunk.Text)
+		fmt.Printf("%s\n", chunk.Text)
 	}
-	grpclog.Println("end of pipeline")
+	fmt.Println("end of pipeline")
 }
 
 func main() {
@@ -36,11 +36,9 @@ func main() {
 		fmt.Println("error during connecting to grpc", err)
 		return
 	}
-	// cmd := strings.Join(os.Args[1:], " ")
 	defer conn.Close()
 	client := pb.NewPipelineExecutorClient(conn)
 
-	// execPipeline(client, &pb.ExecutePipeline{Id: 1, Pipeline: []byte(cmd)})
 	file, err := ioutil.ReadFile("test.yaml")
 	if err != nil {
 		fmt.Println("err: ", err)
